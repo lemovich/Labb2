@@ -52,7 +52,7 @@ class RepositoryTest {
     void findWhere_filtersCorrectly() {
         // Arrange
         Repository<String> repository = new Repository<>();
-        repository.add("Äpple");
+        repository.add("Apelsin");
         repository.add("Banan");
         repository.add("Ananas");
 
@@ -61,7 +61,7 @@ class RepositoryTest {
 
         // Assert
         assertEquals(2, result.size());
-        assertTrue(result.contains("Äpple"));
+        assertTrue(result.contains("Apelsin"));
         assertTrue(result.contains("Ananas"));
     }
 
@@ -69,7 +69,7 @@ class RepositoryTest {
     void findWhere_noMatches_returnsEmptyList() {
         // Arrange
         Repository<String> repository = new Repository<>();
-        repository.add("Äpple");
+        repository.add("Apelsin");
 
         // Act
         List<String> result = repository.findWhere(s -> s.startsWith("Z"));

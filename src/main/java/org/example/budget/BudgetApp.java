@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.SimpleFormatter;
 
 public class BudgetApp {
 
@@ -13,6 +17,9 @@ public class BudgetApp {
     private static final Path DATA_FILE = Path.of("transaktioner.csv");
 
     static void main() {
+
+        setupLogging();
+
         Repository<Transaction> repository = new Repository<>();
         TransactionFileStorage storage = new TransactionFileStorage();
         BudgetCalculator calculator = new BudgetCalculator();
@@ -38,6 +45,25 @@ public class BudgetApp {
                 }
                 default -> System.out.println("Ogiltigt val, försök igen.");
             }
+        }
+    }
+
+    private static void setupLogging() {
+        try {
+            FileHandler fileHandler = new FileHandler("budget.log", true); // true = bygg på filen, skriv inte över
+            fileHandler.setFormatter(new SimpleFormatter());
+
+            Logger rootLogger = Logger.getLogger("");
+            rootLogger.addHandler(fileHandler);
+
+            // Ta bort standard-konsolutskriften så loggarna inte stör menyn
+            for (Handler handler : rootLogger.getHandlers()) {
+                if (handler instanceof ConsoleHandler) {
+                    rootLogger.removeHandler(handler);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Kunde inte sätta upp loggfil, loggar till konsolen istället.");
         }
     }
 

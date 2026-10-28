@@ -11,7 +11,6 @@ class TransactionTest {
 
     @Test
     void constructor_withNullDate_throwsInvalidTransactionException() {
-        // Arrange + Act + Assert
         assertThrows(InvalidTransactionException.class, () -> {
             new Transaction(null, "Mat", new BigDecimal("100"), TransactionType.UTGIFT);
         });
@@ -61,14 +60,12 @@ class TransactionTest {
 
     @Test
     void constructor_withValidValues_createsTransactionSuccessfully() {
-        // Arrange
+
         LocalDate date = LocalDate.of(2026, 10, 1);
         BigDecimal amount = new BigDecimal("250.50");
 
-        // Act
         Transaction transaction = new Transaction(date, "Lön", amount, TransactionType.INKOMST);
 
-        // Assert
         assertEquals(date, transaction.date());
         assertEquals("Lön", transaction.category());
         assertEquals(0, amount.compareTo(transaction.amount()));
